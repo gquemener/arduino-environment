@@ -23,8 +23,8 @@ void Barometer::boot()
 
 void Barometer::tick(unsigned long timestamp)
 {
-  if (timestamp - lastUpdateTimestamp > 3600000) {
-    lastUpdateTimestamp = timestamp;
+  if (this->lastUpdateTimestamp == 0 || timestamp - this->lastUpdateTimestamp > 3600000) {
+    this->lastUpdateTimestamp = timestamp;
     this->measure();
   }
 }
@@ -35,5 +35,6 @@ void Barometer::measure()
     this->logger->info("Failed to perform reading :(");
   }
 
-  stateStore->dispatch(ATMOS_PRESSURE_WAS_MEASURED, String(this->bmp.pressure / 100.0));
+  this->stateStore->dispatch(ATMOS_PRESSURE_WAS_MEASURED, String(this->bmp.pressure / 100.0));
+  this->stateStore->dispatch(TEMPERATURE_WAS_MEASURED, String(this->bmp.temperature));
 }

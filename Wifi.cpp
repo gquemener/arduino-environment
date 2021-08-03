@@ -43,9 +43,18 @@ void Wifi::connect()
     while (true);
   }
 
-  this->logger->info("Attempting WiFi connection...");
-  WiFi.begin(this->ssid, this->password);
-  delay(10000);
+  if (this->isConnected()) {
+    return;
+  }
+
+  unsigned int attempts = 0;
+
+  do {
+    attempts++;
+    this->logger->info("Attempting WiFi connection...");
+    WiFi.begin(this->ssid, this->password);
+    delay(10000);
+  } while (attempts < 3 && !this->isConnected());
 }
 
 bool Wifi::isConnected()
@@ -67,8 +76,7 @@ unsigned long Wifi::getCurrentTimestamp()
   }
 
   if (!this->isConnected()) {
-    this->logger->info("Wifi is not connected!");
-    while (true);
+    this->connect();
   }
 
   return WiFi.getTime();

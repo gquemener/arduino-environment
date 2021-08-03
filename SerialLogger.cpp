@@ -8,6 +8,7 @@ SerialLogger::SerialLogger(long speed)
 
 void SerialLogger::log(char const* message)
 {
+  /**
   if (!Serial) {
     Serial.begin(this->speed);
   }
@@ -17,4 +18,5 @@ void SerialLogger::log(char const* message)
   }
 
   Serial.println(message);
+  */
 }

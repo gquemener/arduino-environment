@@ -30,8 +30,9 @@ void Display::handle(State *state)
   this->tft.textMode();
   this->tft.setTextColor(RA8875_WHITE, RA8875_BLACK);
 
-  this->write(state->atmosPressure() + " hPa", 10, 10, 3);
-  this->write(state->datetime(), 10, 330, 2);
+  this->write(state->atmosPressure + " hPa", 10, 10, 3);
+  this->write(state->temperature + " *C", 10, 70, 3);
+  this->write(state->datetime, 10, 330, 2);
 }
 
 void Display::write(String text, int x, int y, int size)

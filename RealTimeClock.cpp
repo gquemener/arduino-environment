@@ -11,16 +11,16 @@ void RealTimeClock::boot()
 {
   this->logger->info("Booting RTC...");
 
-  while (!this->wifi->isConnected()) {
-    this->wifi->connect();
-  }
-
   this->rtc.begin();
-  this->rtc.setEpoch(this->wifi->getCurrentTimestamp());
 }
 
 void RealTimeClock::tick(unsigned long timestamp)
 {
+  if (this->lastUpdateTimestamp == 0) {
+    this->rtc.setEpoch(this->wifi->getCurrentTimestamp());
+    lastUpdateTimestamp = timestamp;
+  }
+  
   if (timestamp - lastUpdateTimestamp > 1000) {
     lastUpdateTimestamp = timestamp;
     char date[25];

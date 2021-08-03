@@ -2,26 +2,27 @@
 
 StateStore::StateStore(Subscriber *subscriber, Logger *logger)
 {
-    this->state = new State("", "");
+    this->state = new State();
     this->subscriber = subscriber;
     this->logger = logger;
 }
 
 void StateStore::dispatch(char type, String data)
 {
-    State* prev = this->state;
+  this->logger->info(data);
     switch (type) {
         case CLOCK_HAS_TICKED:
-            this->state = new State(data, this->state->atmosPressure());
-            delete prev;
+            this->state->datetime = data;
             break;
 
         case ATMOS_PRESSURE_WAS_MEASURED:
-            this->state = new State(this->state->datetime(), data);
-            delete prev;
+            this->state->atmosPressure = data;
+            break;
+            
+        case TEMPERATURE_WAS_MEASURED:
+            this->state->temperature = data;
             break;
     }
-    this->logger->info(String(type) + ": " + data);
 
     this->subscriber->handle(this->state);
 }

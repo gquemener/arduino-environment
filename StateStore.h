@@ -3,6 +3,7 @@
 
 #define CLOCK_HAS_TICKED 'A'
 #define ATMOS_PRESSURE_WAS_MEASURED 'B'
+#define TEMPERATURE_WAS_MEASURED 'C'
 
 #include "State.h"
 #include "Subscriber.h"

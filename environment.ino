@@ -25,6 +25,6 @@ void setup() {
 
 void loop() {
   unsigned long timestamp = millis();
-  rtc.tick(timestamp);
   barometer.tick(timestamp);
+  rtc.tick(timestamp);
 }
