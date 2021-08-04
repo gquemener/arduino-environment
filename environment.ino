@@ -1,4 +1,4 @@
-#include "SerialLogger.h"
+#include "NullLogger.h"
 #include "Display.h"
 #include "RealTimeClock.h"
 #include "Wifi.h"
@@ -7,7 +7,7 @@
 
 #include "StateStore.h"
 
-SerialLogger logger(9600);
+NullLogger logger;
 
 Display display(&logger);
 StateStore stateStore(&display, &logger);
