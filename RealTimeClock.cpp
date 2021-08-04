@@ -16,13 +16,13 @@ void RealTimeClock::boot()
 
 void RealTimeClock::tick(unsigned long timestamp)
 {
-  if (this->lastUpdateTimestamp == 0) {
+  if (this->lastUpdateTimestamp == 0 || timestamp - this->lastUpdateTimestamp > 2700000) {
     this->rtc.setEpoch(this->wifi->getCurrentTimestamp());
-    lastUpdateTimestamp = timestamp;
+    this->lastUpdateTimestamp = timestamp;
   }
   
-  if (timestamp - lastUpdateTimestamp > 1000) {
-    lastUpdateTimestamp = timestamp;
+  if (timestamp - this->lastUpdateTimestamp > 1000) {
+    this->lastUpdateTimestamp = timestamp;
     char date[25];
 
     sprintf(
