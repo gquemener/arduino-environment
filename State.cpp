@@ -2,7 +2,7 @@
 
 State::State()
 {
-    this->datetime = "";
-    this->atmosPressure = "";
-    this->temperature = "";
+    this->datetime = "Syncing date and time...";
+    this->atmosPressure = "---.--";
+    this->temperature = "--.--";
 }
