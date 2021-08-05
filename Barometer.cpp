@@ -18,7 +18,7 @@ void Barometer::boot()
 
   // First reading is always wrong
   this->measure();
-  this->measure();
+  delay(2000);
 }
 
 void Barometer::tick(unsigned long timestamp)

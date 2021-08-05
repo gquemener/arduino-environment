@@ -25,7 +25,7 @@ void Display::boot()
   this->tft.fillRect(0, 315, 800, 10, RA8875_WHITE);
 }
 
-void Display::handle(State *state)
+void Display::handle(char type, State *state)
 {
   this->tft.textMode();
   this->tft.setTextColor(RA8875_WHITE, RA8875_BLACK);

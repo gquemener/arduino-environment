@@ -19,15 +19,13 @@ class Display: public Subscriber
     Logger *logger;
     Adafruit_RA8875 tft = Adafruit_RA8875(RA8875_CS, RA8875_RESET);
     String lines[24];
-    String spaces(int count);
     void write(String text, int x, int y, int size);
 
   public:
     Display(Logger *logger);
 
-    void handle(State *state);
+    void handle(char type, State *state);
     void boot();
-    void writeLine(String line);
 };
 
 #endif

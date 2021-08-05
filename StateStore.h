@@ -13,13 +13,15 @@ class StateStore
 {
   private:
     State *state;
-    Subscriber *subscriber;
     Logger *logger;
+    Subscriber* subscribers[2];
+    int subscribersIndex = 0;
 
   public:
-    StateStore(Subscriber *subscriber, Logger *logger);
+    StateStore(Logger *logger);
 
     void dispatch(char type, String data);
+    void subscribe(Subscriber *subscriber);
 };
 
 #endif

@@ -1,15 +1,14 @@
 #include "StateStore.h"
 
-StateStore::StateStore(Subscriber *subscriber, Logger *logger)
+StateStore::StateStore(Logger *logger)
 {
     this->state = new State();
-    this->subscriber = subscriber;
     this->logger = logger;
 }
 
 void StateStore::dispatch(char type, String data)
 {
-  this->logger->info(data);
+    this->logger->info(data);
     switch (type) {
         case CLOCK_HAS_TICKED:
             this->state->datetime = data;
@@ -23,6 +22,13 @@ void StateStore::dispatch(char type, String data)
             this->state->temperature = data;
             break;
     }
+    
+    for (int i = 0; i < this->subscribersIndex; i++) {
+      this->subscribers[i]->handle(type, this->state);
+    }
+}
 
-    this->subscriber->handle(this->state);
+void StateStore::subscribe(Subscriber *subscriber)
+{
+  this->subscribers[this->subscribersIndex++] = subscriber;
 }

@@ -6,7 +6,7 @@
 class Subscriber
 {
   public:
-    virtual void handle(State *state) = 0;
+    virtual void handle(char type, State *state) = 0;
 };
 
 #endif
