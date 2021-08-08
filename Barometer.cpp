@@ -17,8 +17,11 @@ void Barometer::boot()
   this->bmp.setIIRFilterCoeff(BMP3_IIR_FILTER_COEFF_3);
 
   // First reading is always wrong
-  this->measure();
-  this->measure();
+  if (!this->bmp.performReading()) {
+    this->logger->warn("Failed to perform reading :(");
+  }
+  double pressure = this->bmp.pressure;
+  delay(2000);
 }
 
 void Barometer::tick(unsigned long timestamp)
