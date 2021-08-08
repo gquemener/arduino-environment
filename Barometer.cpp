@@ -39,5 +39,4 @@ void Barometer::measure()
   }
 
   this->stateStore->dispatch(ATMOS_PRESSURE_WAS_MEASURED, String(this->bmp.pressure / 100.0));
-  this->stateStore->dispatch(TEMPERATURE_WAS_MEASURED, String(this->bmp.temperature));
 }
