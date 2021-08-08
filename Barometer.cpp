@@ -35,7 +35,7 @@ void Barometer::tick(unsigned long timestamp)
 void Barometer::measure()
 {
   if (!this->bmp.performReading()) {
-    this->logger->info("Failed to perform reading :(");
+    this->logger->warn("Failed to perform reading :(");
   }
 
   this->stateStore->dispatch(ATMOS_PRESSURE_WAS_MEASURED, String(this->bmp.pressure / 100.0));
