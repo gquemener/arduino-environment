@@ -1,6 +1,6 @@
 #include "State.h"
 
-void State::addPressure(double pressure)
+void State::addPressure(int pressure)
 {
   if (pressure < MIN_PRESSURE || pressure > MAX_PRESSURE) {
     return;
@@ -14,16 +14,11 @@ void State::addPressure(double pressure)
   this->minPressure = this->pressures[0];
   this->maxPressure = this->pressures[0];
   for (int i = 1; i < 24; i++) {
-    if (this->pressures[i] == 0.0) {
+    if (this->pressures[i] == 0) {
       continue;
     }
     
-    if (this->pressures[i] < this->minPressure) {
-      this->minPressure = this->pressures[i];
-    }
-    
-    if (this->pressures[i] > this->maxPressure) {
-      this->maxPressure = this->pressures[i];
-    }
+    this->minPressure = min(this->minPressure, this->pressures[i]);
+    this->maxPressure = max(this->maxPressure, this->pressures[i]);
   }
 }

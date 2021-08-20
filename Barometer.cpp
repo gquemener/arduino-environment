@@ -38,5 +38,6 @@ void Barometer::measure()
     this->logger->warn("Failed to perform reading :(");
   }
 
-  this->stateStore->dispatch(ATMOS_PRESSURE_WAS_MEASURED, String(this->bmp.pressure / 100.0));
+  int pressure = (int) round(this->bmp.pressure / 10.0F);
+  this->stateStore->dispatch(ATMOS_PRESSURE_WAS_MEASURED, String(pressure));
 }

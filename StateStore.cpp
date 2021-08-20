@@ -9,10 +9,10 @@ StateStore::StateStore(Subscriber *subscriber, Logger *logger)
 
 void StateStore::dispatch(char type, String data)
 {
-  this->logger->info(data);
+    this->logger->info(String(type) + " " + data);
     switch (type) {
       case ATMOS_PRESSURE_WAS_MEASURED:
-        this->state->addPressure(data.toDouble());
+        this->state->addPressure(data.toInt());
         break;
     }
 

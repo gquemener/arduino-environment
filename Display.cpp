@@ -25,19 +25,18 @@ void Display::boot()
 
 void Display::handle(State *state)
 {
-  double minHistoValue = state->minPressure;
-  double maxHistoValue = state->maxPressure;
+  this->logger->info(String(state->minPressure) + " " + String(state->maxPressure) + " " + String(state->pressures[0]));
+  
+  double minHistoValue = min(9900, state->minPressure) / 10.0F;
+  double maxHistoValue = max(10100, state->maxPressure) / 10.0F;
 
-  if (state->maxPressure - state->minPressure < 1.0) {
-    minHistoValue = state->minPressure - 1.0;
-    maxHistoValue = state->maxPressure + 1.0;
-  }
+  this->logger->info(String(minHistoValue) + " " + String(maxHistoValue));
 
   for (int i = 0; i < 24; i++) {
-    double pressure = state->pressures[i];
-    this->logger->info(String("pressures[" + String(i) + "]" + pressure));
+    double current = state->pressures[i] / 10.0F;
+    this->logger->info(String("pressures[" + String(i) + "]" + current));
 
-    if (pressure == 0.0) {
+    if (current == 0.0) {
       continue;
     }
 
@@ -52,14 +51,16 @@ void Display::handle(State *state)
     if (i == 23) {
       continue;
     }
-    double previous = state->pressures[i + 1];
+    double previous = state->pressures[i + 1] / 10.0F;
     if (previous == 0.0) {
       continue;
     }
-    double delta = pressure - state->pressures[i + 1];
-    String deltaStr = String(delta);
-    if (deltaStr.substring(0, 1) != "-") {
-      deltaStr = "+" + deltaStr;
+    double delta = current - previous;
+    char deltaStr[7];
+    uint16_t deltaColor = RA8875_WHITE;
+    sprintf(deltaStr, "%+.1f", delta);
+    if (deltaStr[0] == '-') {
+      deltaColor = RA8875_RED;
     }
     int deltaY;
     switch (i % 3) {
@@ -76,14 +77,12 @@ void Display::handle(State *state)
         break;
     }
 
-    uint16_t deltaColor = RA8875_CYAN;
-    if (deltaStr.substring(0, 1) == "-") {
-      deltaColor = RA8875_RED;
-    }
-    this->write(deltaStr.substring(0, 4), x - 50, deltaY, 1, deltaColor);
+    this->write(deltaStr, x - 50, deltaY, 1, deltaColor);
   }
-
-  this->write(String(state->pressures[0]), 10, 10, 4, RA8875_GREEN);
+  
+  char currentStr[6];
+  sprintf(currentStr, "%.1f", state->pressures[0] / 10.0F);
+  this->write(currentStr, 10, 10, 4, RA8875_GREEN);
 }
 
 void Display::write(String text, int x, int y, int size, uint16_t color)
