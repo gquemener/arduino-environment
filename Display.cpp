@@ -42,9 +42,8 @@ void Display::handle(State *state)
     }
 
     int x = 769 - i * (HISTO_WIDTH + HISTO_GAP);
-    int y = MIN_HISTO_Y - ((minHistoValue - pressure)/(maxHistoValue - minHistoValue) * (MAX_HISTO_Y - MIN_HISTO_Y));
-    int height = MAX_HISTO_HEIGHT - ((maxHistoValue - pressure)/(maxHistoValue - minHistoValue) * (MAX_HISTO_HEIGHT - MIN_HISTO_HEIGHT));
-
+    int y = map(current, minHistoValue, maxHistoValue, MIN_HISTO_Y, MAX_HISTO_Y);
+    int height = map(current, minHistoValue, maxHistoValue, MIN_HISTO_HEIGHT, MAX_HISTO_HEIGHT);
     this->tft.graphicsMode();
     this->tft.fillRect(x, y, HISTO_WIDTH, height, COLOR_HISTOGRAM);
 
