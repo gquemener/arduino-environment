@@ -4,7 +4,11 @@
 #define RA8875_INT 3
 #define RA8875_CS 10
 #define RA8875_RESET 9
-#define RA8875_GREY 0x7BEF
+#define COLOR_HISTOGRAM 0x041F // blue
+#define COLOR_PRESSURE 0xFC00 // orange
+#define COLOR_DELTA_POSITIVE 0xFFFF // white
+#define COLOR_DELTA_NEGATIVE 0xE000 // red
+#define COLOR_BACKGROUND 0x0000 // black
 
 #define MIN_HISTO_Y 459
 #define MAX_HISTO_Y 220

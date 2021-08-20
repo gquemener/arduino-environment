@@ -20,11 +20,12 @@ void Display::boot()
   this->tft.PWM1out(255);
 
   this->tft.graphicsMode();
-  this->tft.fillScreen(RA8875_BLACK);
+  this->tft.fillScreen(COLOR_BACKGROUND);
 }
 
 void Display::handle(State *state)
 {
+  this->tft.fillScreen(COLOR_BACKGROUND);
   this->logger->info(String(state->minPressure) + " " + String(state->maxPressure) + " " + String(state->pressures[0]));
   
   double minHistoValue = min(9900, state->minPressure) / 10.0F;
@@ -45,8 +46,7 @@ void Display::handle(State *state)
     int height = MAX_HISTO_HEIGHT - ((maxHistoValue - pressure)/(maxHistoValue - minHistoValue) * (MAX_HISTO_HEIGHT - MIN_HISTO_HEIGHT));
 
     this->tft.graphicsMode();
-    this->tft.fillRect(x, MAX_HISTO_Y, HISTO_WIDTH, MAX_HISTO_HEIGHT, RA8875_BLACK);
-    this->tft.fillRect(x, y, HISTO_WIDTH, height, RA8875_GREEN);
+    this->tft.fillRect(x, y, HISTO_WIDTH, height, COLOR_HISTOGRAM);
 
     if (i == 23) {
       continue;
@@ -57,10 +57,10 @@ void Display::handle(State *state)
     }
     double delta = current - previous;
     char deltaStr[7];
-    uint16_t deltaColor = RA8875_WHITE;
+    uint16_t deltaColor = COLOR_DELTA_POSITIVE;
     sprintf(deltaStr, "%+.1f", delta);
     if (deltaStr[0] == '-') {
-      deltaColor = RA8875_RED;
+      deltaColor = COLOR_DELTA_NEGATIVE;
     }
     int deltaY;
     switch (i % 3) {
@@ -82,7 +82,7 @@ void Display::handle(State *state)
   
   char currentStr[6];
   sprintf(currentStr, "%.1f", state->pressures[0] / 10.0F);
-  this->write(currentStr, 10, 10, 4, RA8875_GREEN);
+  this->write(currentStr, 10, 10, 4, COLOR_PRESSURE);
 }
 
 void Display::write(String text, int x, int y, int size, uint16_t color)
@@ -93,6 +93,6 @@ void Display::write(String text, int x, int y, int size, uint16_t color)
   this->tft.textMode();
   this->tft.textSetCursor(x, y);
   this->tft.textEnlarge(size);
-  this->tft.textColor(color, RA8875_BLACK);
+  this->tft.textTransparent(color);
   this->tft.textWrite(textChar);
 }
