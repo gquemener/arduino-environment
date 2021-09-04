@@ -15,7 +15,7 @@ class Barometer
     Logger *logger;
     StateStore *stateStore;
     unsigned long lastUpdateTimestamp = 0;
-    void measure();
+    int measure();
 
   public:
     Barometer(Logger *logger, StateStore *stateStore);

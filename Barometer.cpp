@@ -26,18 +26,25 @@ void Barometer::boot()
 
 void Barometer::tick(unsigned long timestamp)
 {
-  if (this->lastUpdateTimestamp == 0 || timestamp - this->lastUpdateTimestamp > 3600000) {
+  if (this->lastUpdateTimestamp == 0 || timestamp - this->lastUpdateTimestamp > 1000) {
     this->lastUpdateTimestamp = timestamp;
-    this->measure();
+    int pressure = this->measure();
+
+    this->stateStore->dispatch(
+        ATMOS_PRESSURE_WAS_MEASURED,
+        timestamp,
+        String(pressure)
+    );
   }
 }
 
-void Barometer::measure()
+int Barometer::measure()
 {
   if (!this->bmp.performReading()) {
     this->logger->warn("Failed to perform reading :(");
+
+    return 0;
   }
 
-  int pressure = (int) round(this->bmp.pressure / 10.0F);
-  this->stateStore->dispatch(ATMOS_PRESSURE_WAS_MEASURED, String(pressure));
+  return (int) round(this->bmp.pressure / 10.0F);
 }

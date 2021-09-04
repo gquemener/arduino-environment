@@ -13,11 +13,8 @@
 #define MIN_HISTO_Y 459
 #define MAX_HISTO_Y 220
 #define MIN_HISTO_HEIGHT 1
-#define MAX_HISTO_HEIGHT 240
-#define HISTO_WIDTH 21
-#define HISTO_GAP 12
-#define MIN_HISTO_VALUE 1000
-#define MAX_HISTO_VALUE 1010
+#define MAX_HISTO_HEIGHT 260
+#define COLS_GAP 33
 
 #include "Subscriber.h"
 #include "Logger.h"
