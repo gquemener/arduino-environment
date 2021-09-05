@@ -14,11 +14,17 @@ void State::addPressure(unsigned short int pressure)
     if (this->minPressure == 0) {
         this->minPressure = pressure;
     }
-    if (this->maxPressure) {
+    if (this->maxPressure == 0) {
         this->maxPressure = pressure;
     }
-    this->minPressure = min(this->minPressure, pressure);
-    this->maxPressure = min(this->maxPressure, pressure);
+
+    for (int i = 0; i < 800; i++) {
+        if (this->pressures[i] == 0) {
+            break;
+        }
+        this->minPressure = min(this->minPressure, this->pressures[i]);
+        this->maxPressure = max(this->maxPressure, this->pressures[i]);
+    }
 }
 
 void State::addDelta(unsigned short int pressure)
