@@ -49,8 +49,7 @@ void Display::handle(State *state)
   }
 
   for (int i = 0; i < 23; i++) {
-    unsigned short current = state->deltas[i];
-    double delta = current / 10.0F;
+    double delta = state->deltas[i] / 10.0F;
     char deltaStr[7];
     uint16_t deltaColor = COLOR_DELTA_POSITIVE;
     sprintf(deltaStr, "%+.1f", delta);
