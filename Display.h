@@ -10,10 +10,10 @@
 #define COLOR_DELTA_NEGATIVE 0xE000 // red
 #define COLOR_BACKGROUND 0x0000 // black
 
-#define MIN_HISTO_Y 459
-#define MAX_HISTO_Y 250
+#define MIN_HISTO_Y 480
+#define MAX_HISTO_Y 210
 #define MIN_HISTO_HEIGHT 1
-#define MAX_HISTO_HEIGHT 230
+#define MAX_HISTO_HEIGHT 270
 #define COLS_GAP 33
 
 #include "Subscriber.h"
