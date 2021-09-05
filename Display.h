@@ -11,9 +11,9 @@
 #define COLOR_BACKGROUND 0x0000 // black
 
 #define MIN_HISTO_Y 459
-#define MAX_HISTO_Y 220
+#define MAX_HISTO_Y 250
 #define MIN_HISTO_HEIGHT 1
-#define MAX_HISTO_HEIGHT 260
+#define MAX_HISTO_HEIGHT 230
 #define COLS_GAP 33
 
 #include "Subscriber.h"
