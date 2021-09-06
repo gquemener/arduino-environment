@@ -29,8 +29,15 @@ void Display::handle(State *state)
   this->tft.fillScreen(COLOR_BACKGROUND);
   this->logger->info(String(state->minPressure) + " " + String(state->maxPressure) + " " + String(state->pressures[0]));
 
-  unsigned short minHistoValue = min(9900, state->minPressure);
-  unsigned short maxHistoValue = max(10100, state->maxPressure);
+  unsigned short minHistoValue;
+  unsigned short maxHistoValue;
+  if (state->maxPressure - state->minPressure > 50) {
+      minHistoValue = state->minPressure;
+      maxHistoValue = state->maxPressure;
+  } else {
+      minHistoValue = state->pressures[0] - 25;
+      maxHistoValue = state->pressures[0] + 25;
+  }
 
   this->logger->info(String(minHistoValue) + " " + String(maxHistoValue));
 
