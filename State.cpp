@@ -11,7 +11,7 @@ void State::addPressure(unsigned short int pressure)
     }
     this->pressures[0] = pressure;
 
-    if (this->minPressure == 0) {
+    if (this->minPressure == 0 || this->minPressure < MIN_PRESSURE) {
         this->minPressure = pressure;
     }
     if (this->maxPressure == 0) {
