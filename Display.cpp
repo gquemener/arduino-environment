@@ -29,18 +29,6 @@ void Display::handle(State *state)
   this->tft.fillScreen(COLOR_BACKGROUND);
   this->logger->info(String(state->minPressure) + " " + String(state->maxPressure) + " " + String(state->pressures[0]));
 
-  unsigned short minHistoValue;
-  unsigned short maxHistoValue;
-  if (state->maxPressure - state->minPressure > 50) {
-      minHistoValue = state->minPressure;
-      maxHistoValue = state->maxPressure;
-  } else {
-      minHistoValue = state->pressures[0] - 25;
-      maxHistoValue = state->pressures[0] + 25;
-  }
-
-  this->logger->info(String(minHistoValue) + " " + String(maxHistoValue));
-
   for (int i = 0; i < 800; i++) {
     unsigned short current = state->pressures[i];
     this->logger->info(String("pressures[" + String(i) + "]" + current));
@@ -50,8 +38,8 @@ void Display::handle(State *state)
     }
 
     int x = 800 - i;
-    int y = map(current, minHistoValue, maxHistoValue, MIN_HISTO_Y, MAX_HISTO_Y);
-    int height = map(current, minHistoValue, maxHistoValue, MIN_HISTO_HEIGHT, MAX_HISTO_HEIGHT);
+    int y = map(current, state->minPressure, state->maxPressure, MIN_HISTO_Y, MAX_HISTO_Y);
+    int height = map(current, state->minPressure, state->maxPressure, MIN_HISTO_HEIGHT, MAX_HISTO_HEIGHT);
     this->tft.drawFastVLine(x, y, height, COLOR_HISTOGRAM);
   }
 
@@ -78,13 +66,20 @@ void Display::handle(State *state)
         break;
     }
 
-    unsigned short int x = 769 - i * COLS_GAP;
+    unsigned short int x = 775 - i * COLS_GAP;
     this->write(deltaStr, x - 50, deltaY, 1, deltaColor);
   }
 
-  char currentStr[6];
-  sprintf(currentStr, "%.1f", state->pressures[0] / 10.0F);
-  this->write(currentStr, 10, 10, 4, COLOR_PRESSURE);
+  char pressureStr[6];
+
+  sprintf(pressureStr, "%.1f", state->pressures[0] / 10.0F);
+  this->write(pressureStr, 10, 10, 4, COLOR_PRESSURE);
+
+  sprintf(pressureStr, "%.1f", state->minPressure / 10.0F);
+  this->write(pressureStr, 10, 450, 1, COLOR_PRESSURE);
+
+  sprintf(pressureStr, "%.1f", state->maxPressure / 10.0F);
+  this->write(pressureStr, 10, 210, 1, COLOR_PRESSURE);
 }
 
 void Display::write(String text, int x, int y, int size, uint16_t color)
