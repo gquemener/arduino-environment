@@ -11,19 +11,19 @@ void State::addPressure(unsigned short int pressure)
     }
     this->pressures[0] = pressure;
 
-    if (this->minPressure == 0 || this->minPressure < MIN_PRESSURE) {
-        this->minPressure = pressure;
-    }
-    if (this->maxPressure == 0) {
-        this->maxPressure = pressure;
-    }
-
-    for (int i = 0; i < 800; i++) {
+    this->minPressure = pressure;
+    this->maxPressure = pressure;
+    for (int i = 1; i < 800; i++) {
         if (this->pressures[i] == 0) {
             break;
         }
         this->minPressure = min(this->minPressure, this->pressures[i]);
         this->maxPressure = max(this->maxPressure, this->pressures[i]);
+    }
+
+    if (this->maxPressure - this->minPressure < 20) {
+        this->maxPressure += 10;
+        this->minPressure = this->maxPressure - 20;
     }
 }
 
