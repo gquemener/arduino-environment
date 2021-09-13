@@ -85,10 +85,10 @@ void Display::handle(State *state)
   this->write(pressureStr, 10, 10, 4, COLOR_PRESSURE);
 
   sprintf(pressureStr, "%.1f", state->minPressure / 10.0F);
-  this->write(pressureStr, 10, 450, 1, COLOR_PRESSURE);
+  this->write(pressureStr, 10, 450, 1, COLOR_PRESSURE_LIMIT);
 
   sprintf(pressureStr, "%.1f", state->maxPressure / 10.0F);
-  this->write(pressureStr, 10, 210, 1, COLOR_PRESSURE);
+  this->write(pressureStr, 10, 210, 1, COLOR_PRESSURE_LIMIT);
 }
 
 void Display::write(String text, int x, int y, int size, uint16_t color)

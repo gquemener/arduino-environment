@@ -8,6 +8,7 @@
 #define COLOR_HISTOGRAM_AVERAGE 0x71FB // purple
 #define COLOR_HISTOGRAM_HIGH 0x02B9 // blue
 #define COLOR_PRESSURE 0xFC00 // orange
+#define COLOR_PRESSURE_LIMIT 0x36C0 // green
 #define COLOR_DELTA_POSITIVE 0xFFFF // white
 #define COLOR_DELTA_NEGATIVE 0xE000 // red
 #define COLOR_BACKGROUND 0x0000 // black
