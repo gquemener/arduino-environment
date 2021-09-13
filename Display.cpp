@@ -40,7 +40,16 @@ void Display::handle(State *state)
     int x = 800 - i;
     int y = map(current, state->minPressure, state->maxPressure, MIN_HISTO_Y, MAX_HISTO_Y);
     int height = map(current, state->minPressure, state->maxPressure, MIN_HISTO_HEIGHT, MAX_HISTO_HEIGHT);
-    this->tft.drawFastVLine(x, y, height, COLOR_HISTOGRAM);
+
+    unsigned short int color = COLOR_HISTOGRAM_LOW;
+    if (current > 10100) {
+        color = COLOR_HISTOGRAM_AVERAGE;
+    }
+    if (current > 10160) {
+        color = COLOR_HISTOGRAM_HIGH;
+    }
+
+    this->tft.drawFastVLine(x, y, height, color);
   }
 
   for (int i = 0; i < 23; i++) {

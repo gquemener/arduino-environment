@@ -4,7 +4,9 @@
 #define RA8875_INT 3
 #define RA8875_CS 10
 #define RA8875_RESET 9
-#define COLOR_HISTOGRAM 0x041F // blue
+#define COLOR_HISTOGRAM_LOW 0xF201 // red
+#define COLOR_HISTOGRAM_AVERAGE 0x71FB // purple
+#define COLOR_HISTOGRAM_HIGH 0x02B9 // blue
 #define COLOR_PRESSURE 0xFC00 // orange
 #define COLOR_DELTA_POSITIVE 0xFFFF // white
 #define COLOR_DELTA_NEGATIVE 0xE000 // red
