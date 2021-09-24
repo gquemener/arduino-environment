@@ -2,8 +2,8 @@
 
 Barometer::Barometer(Logger *logger, StateStore *stateStore)
 {
-    this->logger = logger;
-    this->stateStore = stateStore;
+  this->logger = logger;
+  this->stateStore = stateStore;
 }
 
 void Barometer::boot()
@@ -31,9 +31,9 @@ void Barometer::tick(unsigned long timestamp)
     int pressure = this->measure();
 
     this->stateStore->dispatch(
-        ATMOS_PRESSURE_WAS_MEASURED,
-        timestamp,
-        String(pressure)
+      ATMOS_PRESSURE_WAS_MEASURED,
+      timestamp,
+      String(pressure)
     );
   }
 }

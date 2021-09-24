@@ -46,7 +46,7 @@ void Display::handle(State *state)
     this->logger->info(String("pressures[" + String(i) + "]" + current));
 
     if (current == 0) {
-        break;
+      break;
     }
 
     int x = 800 - i;
@@ -55,10 +55,10 @@ void Display::handle(State *state)
 
     unsigned short int color = COLOR_HISTOGRAM_LOW;
     if (current > 10100) {
-        color = COLOR_HISTOGRAM_AVERAGE;
+      color = COLOR_HISTOGRAM_AVERAGE;
     }
     if (current > 10160) {
-        color = COLOR_HISTOGRAM_HIGH;
+      color = COLOR_HISTOGRAM_HIGH;
     }
 
     this->tft.drawFastVLine(x, y, height, color);
@@ -78,11 +78,11 @@ void Display::handle(State *state)
         deltaY = 70;
         break;
 
-        case 1:
+      case 1:
         deltaY = 120;
         break;
 
-        case 2:
+      case 2:
         deltaY = 170;
         break;
     }
