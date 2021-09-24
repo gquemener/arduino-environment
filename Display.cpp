@@ -29,6 +29,18 @@ void Display::handle(State *state)
   this->tft.fillScreen(COLOR_BACKGROUND);
   this->logger->info(String(state->minPressure) + " " + String(state->maxPressure) + " " + String(state->pressures[0]));
 
+  unsigned short int maxScale = state->maxPressure;
+  unsigned short int minScale = state->minPressure;
+  unsigned short int interval = maxScale - minScale;
+  signed short int deltaInterval = MIN_SCALE_INTERVAL - interval;
+  if (deltaInterval > 0) {
+    if (deltaInterval % 2 == 1) {
+      deltaInterval--;
+    }
+    maxScale += (deltaInterval) / 2;
+    minScale -= (deltaInterval) / 2;
+  }
+
   for (int i = 0; i < 800; i++) {
     unsigned short current = state->pressures[i];
     this->logger->info(String("pressures[" + String(i) + "]" + current));
@@ -38,8 +50,8 @@ void Display::handle(State *state)
     }
 
     int x = 800 - i;
-    int y = map(current, state->minPressure, state->maxPressure, MIN_HISTO_Y, MAX_HISTO_Y);
-    int height = map(current, state->minPressure, state->maxPressure, MIN_HISTO_HEIGHT, MAX_HISTO_HEIGHT);
+    int y = map(current, minScale, maxScale, MIN_HISTO_Y, MAX_HISTO_Y);
+    int height = map(current, minScale, maxScale, MIN_HISTO_HEIGHT, MAX_HISTO_HEIGHT);
 
     unsigned short int color = COLOR_HISTOGRAM_LOW;
     if (current > 10100) {
@@ -79,15 +91,21 @@ void Display::handle(State *state)
     this->write(deltaStr, x - 50, deltaY, 1, deltaColor);
   }
 
-  char pressureStr[6];
+  char pressureStr[23];
 
-  sprintf(pressureStr, "%.1f", state->pressures[0] / 10.0F);
+  sprintf(
+    pressureStr,
+    "%.1f [%.1f, %.1f]",
+    state->pressures[0] / 10.0F,
+    state->minPressure / 10.0F,
+    state->maxPressure / 10.0F
+  );
   this->write(pressureStr, 10, 10, 4, COLOR_PRESSURE);
 
-  sprintf(pressureStr, "%.1f", state->minPressure / 10.0F);
+  sprintf(pressureStr, "%.1f", minScale / 10.0F);
   this->write(pressureStr, 10, 450, 1, COLOR_PRESSURE_LIMIT);
 
-  sprintf(pressureStr, "%.1f", state->maxPressure / 10.0F);
+  sprintf(pressureStr, "%.1f", maxScale / 10.0F);
   this->write(pressureStr, 10, 210, 1, COLOR_PRESSURE_LIMIT);
 }
 

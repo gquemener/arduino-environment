@@ -20,11 +20,6 @@ void State::addPressure(unsigned short int pressure)
         this->minPressure = min(this->minPressure, this->pressures[i]);
         this->maxPressure = max(this->maxPressure, this->pressures[i]);
     }
-
-    if (this->maxPressure - this->minPressure < 20) {
-        this->maxPressure += 10;
-        this->minPressure = this->maxPressure - 20;
-    }
 }
 
 void State::addDelta(unsigned short int pressure)

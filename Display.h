@@ -18,6 +18,7 @@
 #define MIN_HISTO_HEIGHT 1
 #define MAX_HISTO_HEIGHT 270
 #define COLS_GAP 33
+#define MIN_SCALE_INTERVAL 100
 
 #include "Subscriber.h"
 #include "Logger.h"
