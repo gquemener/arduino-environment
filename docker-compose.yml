@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  arduino:
+    build:
+      context: ./docker/arduino
+      args:
+        arduino_cli_version: 0.19.0
+    working_dir: /app/environment
+    volumes:
+        - '.:/app/environment'
+    user: '${UID:-1000}:${GID:-1000}'
+    environment:
+      ARDUINO_UPDATER_ENABLE_NOTIFICATION: 0
+      ARDUINO_DIRECTORIES_DATA: /app/environment/.arduino/data
+      ARDUINO_DIRECTORIES_DOWNLOADS: /app/environment/.arduino/data
+      ARDUINO_DIRECTORIES_USER: /app/environment/.arduino/user
