@@ -1,0 +1,25 @@
+name: Compilation
+
+on:
+  push:
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache .arduino directory
+        uses: actions/cache@v2
+        with:
+          path: ./.arduino
+          key: ${{ runner.os }}-arduino
+
+      - run: docker-compose pull
+
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
+
+      - run: docker-compose build
+
+      - run: docker-compose run --rm --user "$(id -u):$(id -g)" arduino make compile
